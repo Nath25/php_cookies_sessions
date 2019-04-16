@@ -1,4 +1,26 @@
-<?php require 'inc/head.php'; ?>
+<?php 
+  session_start();
+
+  require 'inc/head.php'; 
+  $loginNameErr = "";
+  $_SESSION=[];
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+    if (!isset($_POST ['loginname']) || empty($_POST["loginname"])) {
+      $loginNameErr = "Name is required";
+    }
+    else {
+      if ($_POST['loginname']=='Nath' ) {
+        $_SESSION=[];
+        $_SESSION['loginname'] = $_POST['loginname'];
+        
+        header ('location:index.php');
+        exit();
+      }
+      
+    }
+  }
+?>
 <div class="container" style="margin-top:40px">
 <div class="row">
   <div class="col-sm-6 col-md-4 col-md-offset-4">
@@ -23,6 +45,7 @@
                       <i class="glyphicon glyphicon-user"></i>
                     </span>
                     <input class="form-control" placeholder="Username" name="loginname" type="text" autofocus>
+                    <span class="error" style="color: red"><?php echo $loginNameErr;?></span>
                   </div>
                 </div>
                 <div class="form-group">
